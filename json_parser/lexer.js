@@ -24,6 +24,13 @@ const lexString = string => {
 };
 
 const lexNull = string => {
+  const NULL_LENGTH = "null".length;
+  if (
+    string.length >= NULL_LENGTH &&
+    string.substring(0, NULL_LENGTH) === "null"
+  ) {
+    return [true, string[NULL_LENGTH]];
+  }
   return ["", string];
 };
 const lexNumber = string => {
@@ -100,5 +107,5 @@ function lex(string) {
   return [tokens, string];
 }
 
-console.log(lex('{"heeee" : 16}'));
+console.log(lex('{"heeee" : null}'));
 // console.log(lexString('"he"'));
