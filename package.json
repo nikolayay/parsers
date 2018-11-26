@@ -1,0 +1,23 @@
+{
+  "name": "parsers",
+  "version": "1.0.0",
+  "description": "My attempt to better understand parsers.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikolayay/parsers.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nikolayay/parsers/issues"
+  },
+  "homepage": "https://github.com/nikolayay/parsers#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}

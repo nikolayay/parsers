@@ -23,16 +23,6 @@ const lexString = string => {
   return ["", string];
 };
 
-const lexNull = string => {
-  const NULL_LENGTH = "null".length;
-  if (
-    string.length >= NULL_LENGTH &&
-    string.substring(0, NULL_LENGTH) === "null"
-  ) {
-    return [true, string[NULL_LENGTH]];
-  }
-  return ["", string];
-};
 const lexNumber = string => {
   json_number = "";
 
@@ -61,7 +51,34 @@ const lexNumber = string => {
 
   return [parseInt(json_number), string];
 };
+
+const lexNull = string => {
+  const NULL_LENGTH = "null".length;
+  if (
+    string.length >= NULL_LENGTH &&
+    string.substring(0, NULL_LENGTH) === "null"
+  ) {
+    return [null, string.substring(NULL_LENGTH)];
+  }
+  return ["", string];
+};
+
 const lexBool = string => {
+  const TRUE_LENGTH = "true".length;
+  const FALSE_LENGTH = "false".length;
+  if (
+    string.length >= TRUE_LENGTH &&
+    string.substring(0, TRUE_LENGTH) === "true"
+  ) {
+    return [true, string.substring(TRUE_LENGTH)];
+  }
+  if (
+    string.length >= FALSE_LENGTH &&
+    string.substring(0, FALSE_LENGTH) === "false"
+  ) {
+    console.log([false, string.substring(FALSE_LENGTH)]);
+    return [false, string.substring(FALSE_LENGTH)];
+  }
   return ["", string];
 };
 
@@ -69,7 +86,6 @@ const SYNTAX = ["{", "}", ":", ",", "[", "]"];
 
 function lex(string) {
   const tokens = [];
-  console.log(string.length);
 
   while (string.length > 0) {
     let [parsed, rest] = lexString(string);
@@ -85,13 +101,13 @@ function lex(string) {
     string = rest;
 
     [parsed, rest] = lexBool(string);
-    if (parsed) {
+    if (parsed.toString().length) {
       tokens.push(parsed);
     }
     string = rest;
 
     [parsed, rest] = lexNull(string);
-    if (parsed) {
+    if (parsed === null) {
       tokens.push(parsed);
     }
     string = rest;
@@ -107,5 +123,5 @@ function lex(string) {
   return [tokens, string];
 }
 
-console.log(lex('{"heeee" : null}'));
+module.exports = lex;
 // console.log(lexString('"he"'));
